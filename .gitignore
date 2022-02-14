@@ -1,0 +1,8 @@
+store/.env
+db.sqlite3
+bin/
+lib/
+pyvenv.cfg
+.vscode
+__pycache__
+media/

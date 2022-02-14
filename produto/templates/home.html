@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<header>
+	{% include 'partials/_nav.html' %}
+	<section>
+		<div>
+			<h1>store <br> clothing store</h1>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem deleniti minima cupiditate necessitatibus possimus amet fugit saepe earum excepturi, atque velit dolores optio asperiores odit voluptate alias, repellat ab. Dolorem?</p>
+		</div>	
+
+		<aside>
+			<a href="{% url 'category' 'C' %}">
+				<div class="box">casacos</div>
+			</a>
+			<a href="{% url 'category' 'M' %}">
+				<div class="box">moletons</div>
+			</a>
+			<a href="{% url 'category' 'B' %}">
+				<div class="box">blusas</div>
+			</a>
+			<a href="{% url 'category' 'A' %}">
+				<div class="box">calças</div>
+			</a>
+		</aside>
+	</section>
+</header>
+
+<section>
+	<p class="chique">store clothing store</p>
+	<h1>Roupas de qualidade.</h1>
+	<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta ab est fugit rem pariatur libero nam distinctio quo obcaecati velit magni, quas molestias sint? Suscipit repellendus, ducimus deserunt molestiae sed inventore possimus aut, voluptatum amet nisi odit incidunt asperiores voluptates officiis aliquid, reiciendis vel! Totam deserunt eos, amet suscipit sapiente nesciunt eum voluptates, sunt incidunt, iusto corporis tempore voluptas eveniet laudantium aperiam!</p>
+	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo voluptatem dolor officia omnis autem consequuntur nam et cupiditate animi est eius deleniti, sint maiores saepe beatae inventore asperiores ipsa harum?</p>
+</section>
+
+{% endblock %}

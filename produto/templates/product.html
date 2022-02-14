@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'partials/_nav.html' %}
+<section class="product">
+
+	<img src="../../media/{{produto.imagem}}" alt="">
+
+	<div class="product-details">
+		<form action="{% url 'addtocart' %}">
+			<div class="one-liner">
+				<h2>{{produto.nome}}</h2>
+					
+				<div>
+					{% for variacao in produto.variacao_set.all %}
+						<input type="radio" name="vid" value="{{variacao.id}}">
+						{{variacao}}
+					{% endfor %}
+				</div>
+							
+			</div>
+			
+			<p>{{produto.descricao_longa}}</p>
+			<input class="box submit" type="submit" value="Adicionar ao carrinho">
+	
+		</form>
+	
+		<aside class="prices">
+			<h3>Preços:</h3>
+			{% for variacao in produto.variacao_set.all %}
+				<div class="one-liner">
+					<p>{{variacao.nome}} - R${{variacao.preco}}</p>
+				</div>
+			{% endfor %}
+		</aside>
+	</div>
+</section>
+{% endblock %}

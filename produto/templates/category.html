@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'partials/_nav.html' %}
+
+<section class="category">
+	<h2>Categoria: {{ cat_name }}</h2>
+
+	<div class="product-holder">
+		{% for produto in products %}
+
+			<div class="box2">
+				<img src="../../media/{{produto.imagem}}" alt="">
+				<h3>{{produto.nome}}</h3>
+				<p>{{produto.descricao_curta}}</p>
+				<a href="{% url 'produto' produto.slug %}" class="box">Comprar - 
+					<span class="price">{{produto.preco_minimo}}</span> -
+					<span class="price">{{produto.preco_maximo}}</span>
+				</a>
+			</div>
+
+		{% endfor %}
+	</div>
+</section>
+
+{% endblock %}

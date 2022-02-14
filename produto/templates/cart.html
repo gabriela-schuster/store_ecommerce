@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'partials/_nav.html' %}
+
+<section>
+
+	<h2>Seu carrinho</h2>
+	{% if request.session.cart %}
+
+		{{request.session.cart}}
+		{% for item in cart.values %}
+		{% endfor %}
+
+	{% else %}
+		<p>Seu carrinho está vazio, clique <a class="chique a_bold" href="{% url 'home' %}">aqui</a> para voltar à página inicial</p>
+	{% endif %}
+</section>
+
+{% endblock %}
