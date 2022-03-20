@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
 	'produto.apps.ProdutoConfig',
 	'pedido.apps.PedidoConfig',
+	'perfil.apps.PerfilConfig',
 ]
 
 MIDDLEWARE = [

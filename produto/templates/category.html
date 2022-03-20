@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load omfilters %}
 
 {% block content %}
 {% include 'partials/_nav.html' %}
@@ -13,9 +14,12 @@
 				<img src="../../media/{{produto.imagem}}" alt="">
 				<h3>{{produto.nome}}</h3>
 				<p>{{produto.descricao_curta}}</p>
-				<a href="{% url 'produto' produto.slug %}" class="box">Comprar - 
-					<span class="price">{{produto.preco_minimo}}</span> -
-					<span class="price">{{produto.preco_maximo}}</span>
+				<a href="{% url 'produto' produto.slug %}" class="box">De
+					<span class="price">{{produto.preco_minimo|format_price}}</span> 
+					{% if produto.preco_maximo %}
+					a
+					<span class="price">{{produto.preco_maximo|format_price}}</span>
+					{% endif %}
 				</a>
 			</div>
 

@@ -1,6 +1,17 @@
+{% load static %}
+
 <nav>
 	<a href="{% url 'home' %}"><h3>store</h3></a>
-	<div class="box">
-		<a href="{% url 'cart' %}" class="chique">carrinho</a>
+	<div>
+
+		{% if request.user.is_authenticated %}
+		<!-- <a title="editar usuário" href="{% url 'edit-user' %}"><img src="{% static 'settings.svg' %}" alt="editar"> Perfil</a>		logout in edit page -->
+		<a title="editar usuário" href="{% url 'edit-user' %}"> Perfil</a>		
+		{% else %}
+			<a title="criar usuário" href="{% url 'create-user' %}"><img src="{% static 'user-plus.svg' %}" alt=""></a>
+		{% endif %}
+
+		<a href="{% url 'cart' %}">Carrinho</a>
+
 	</div>
 </nav>

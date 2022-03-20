@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'partials/_nav.html' %}
+
+<section class="create-user">
+
+	<a href="{% url 'create-user' %}"><h3>ou, se não tiver uma conta, clique aqui para criar</h3></a>
+	<h2 class="h2-title">Efetuar Login</h2>
+
+	<form method="POST">
+    {% csrf_token %}
+
+    <label for="username">Usuário</label>
+    <input class="input" type="text" name="username" id="username" />
+
+    <label for="password">Senha</label>
+    <input class="input" type="password" name="password" id="password" />
+
+    <input class="box" type="submit" value="Login">
+  </form>
+	
+</section>
+{% endblock %}

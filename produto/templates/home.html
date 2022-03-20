@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
+{% load omfilters %}
 
 {% block content %}
 <header>
 	{% include 'partials/_nav.html' %}
 	<section>
 		<div>
-			<h1>store <br> clothing store</h1>
+			<h1>store <br> Loja de Roupas</h1>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem deleniti minima cupiditate necessitatibus possimus amet fugit saepe earum excepturi, atque velit dolores optio asperiores odit voluptate alias, repellat ab. Dolorem?</p>
 		</div>	
 
 		<aside>
-			<a href="{% url 'category' 'C' %}">
+			<!-- <a href="{% url 'category' 'C' %}">
 				<div class="box">casacos</div>
 			</a>
 			<a href="{% url 'category' 'M' %}">
@@ -21,16 +22,63 @@
 			</a>
 			<a href="{% url 'category' 'A' %}">
 				<div class="box">calças</div>
-			</a>
+			</a> -->
 		</aside>
 	</section>
 </header>
 
+
 <section>
-	<p class="chique">store clothing store</p>
-	<h1>Roupas de qualidade.</h1>
-	<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta ab est fugit rem pariatur libero nam distinctio quo obcaecati velit magni, quas molestias sint? Suscipit repellendus, ducimus deserunt molestiae sed inventore possimus aut, voluptatum amet nisi odit incidunt asperiores voluptates officiis aliquid, reiciendis vel! Totam deserunt eos, amet suscipit sapiente nesciunt eum voluptates, sunt incidunt, iusto corporis tempore voluptas eveniet laudantium aperiam!</p>
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo voluptatem dolor officia omnis autem consequuntur nam et cupiditate animi est eius deleniti, sint maiores saepe beatae inventore asperiores ipsa harum?</p>
+	<h2>Destaques</h2>
+
+	<div class="featured">		
+		{% for destaque in destaques %}
+	
+		<div>
+			<a href="{% url 'produto' destaque.slug %}"><img src="../../media/{{destaque.imagem}}" alt=""></a>
+			<p>{{destaque.nome}}</p>
+			<a href="{% url 'produto' destaque.slug %}"><h3 class="price chique">{{destaque.preco_minimo}}</h3></a>
+		</div>
+	
+		{% endfor %}
+	</div>
 </section>
+
+<section  class="product-category-chooser">
+	
+	<div class="item-category">
+		<p class="chique">A partir de</p>
+		<h3>R${{preco_minimo_casaco}}</h3>
+		<a href="{% url 'category' 'C' %}"><img src="https://images.unsplash.com/photo-1582607709337-277eb1e1bad9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="foto de casacos"></a>
+		<h2>Casacos</h2>
+		<a href="{% url 'category' 'C' %}">Ver Tudo →</a>
+	</div>
+
+	<div class="item-category">
+		<p class="chique">A partir de</p>
+		<h3>R${{preco_minimo_moletom}}</h3>
+		<a href="{% url 'category' 'M' %}"><img src="https://images.unsplash.com/photo-1611911813383-67769b37a149?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="photo of a product"></a>
+		<h2>Moletons</h2>
+		<a href="{% url 'category' 'M' %}">Ver Tudo →</a>
+	</div>
+
+	<div class="item-category">
+		<p class="chique">A partir de</p>
+		<h3>R${{preco_minimo_blusa}}</h3>
+		<a href="{% url 'category' 'B' %}"><img src="https://images.unsplash.com/photo-1630004184878-c60794d1c105?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YmxvdXNlfGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=400&q=60" alt="photo of a product"></a>
+		<h2>Blusas</h2>
+		<a href="{% url 'category' 'B' %}">Ver Tudo →</a>
+	</div>
+
+	<div class="item-category">
+		<p class="chique">A partir de</p>
+		<h3>R${{preco_minimo_calca}}</h3>
+		<a href="{% url 'category' 'A' %}"><img src="https://images.unsplash.com/photo-1574809736435-dced6ecf6ce7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cGFudHN8ZW58MHwyfDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60" alt="photo of a product"></a>
+		<h2>Calças</h2>
+		<a href="{% url 'category' 'A' %}">Ver Tudo →</a>
+	</div>
+
+</section>
+
 
 {% endblock %}

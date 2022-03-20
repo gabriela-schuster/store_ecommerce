@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'partials/_nav.html' %}
+
+<section class="create-user">
+
+	<a href="{% url 'login-user' %}"><h3>ou, se já tiver um usuário, clique aqui para logar</h3></a>
+	<h2 class="h2-title">criar usuário</h2>
+
+	<form method="POST">
+    {% csrf_token %}
+		
+    {% for field in user_form %}
+
+			{% for error in field.errors %}		<!-- TODO: portuguese -->
+				<div class="alert form-alert error">
+					<p>{{error}}</p>
+				</div>
+			{% endfor %}
+
+	    <label class="bold">{{field.label}}</label>
+	    {{field}}
+    {% endfor %}
+
+    <input class="box" type="submit" value="Continuar">
+  </form>
+	
+</section>
+{% endblock %}

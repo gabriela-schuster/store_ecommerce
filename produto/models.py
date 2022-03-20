@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from django.utils.text import slugify
 
@@ -9,6 +10,7 @@ class Produto(models.Model):
 	imagem = models.ImageField(
 		upload_to='product_images/%Y/%m/', blank=True, null=True)
 	slug = models.SlugField(unique=True, blank=True, null=True)
+	destaque = models.BooleanField(default=False)
 	preco_minimo = models.FloatField()
 	preco_maximo = models.FloatField(
         default=0, null=True, blank=True)

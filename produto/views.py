@@ -5,7 +5,40 @@ from .models import Produto, Variacao
 
 
 def home(req):
-	return render(req, 'home.html')
+	destaques = Produto.objects.filter(destaque=True)
+
+	casacos = Produto.objects.filter(categoria='C')
+	preco_minimo_casaco = 100000
+	for casaco in casacos:
+		if casaco.preco_minimo < preco_minimo_casaco:
+			preco_minimo_casaco = casaco.preco_minimo
+
+	moletoms = Produto.objects.filter(categoria='M')
+	preco_minimo_moletom = 100000
+	for moletom in moletoms:
+		if moletom.preco_minimo < preco_minimo_moletom:
+			preco_minimo_moletom = moletom.preco_minimo
+
+	blusas = Produto.objects.filter(categoria='B')
+	preco_minimo_blusa = 100000
+	for blusa in blusas:
+		if blusa.preco_minimo < preco_minimo_blusa:
+			preco_minimo_blusa = blusa.preco_minimo
+
+	calcas = Produto.objects.filter(categoria='A')
+	preco_minimo_calca = 100000
+	for calca in calcas:
+		if calca.preco_minimo < preco_minimo_calca:
+			preco_minimo_calca = calca.preco_minimo
+	
+	context = {
+		'destaques': destaques,
+		'preco_minimo_casaco': preco_minimo_casaco,
+		'preco_minimo_moletom': preco_minimo_moletom,
+		'preco_minimo_blusa': preco_minimo_blusa,
+		'preco_minimo_calca': preco_minimo_calca,
+	}
+	return render(req, 'home.html', context)
 
 
 def category(req, cat):
@@ -13,7 +46,7 @@ def category(req, cat):
 	cat_name_full = None
 
 	if cat == "C":
-		cat_name_full = 'Camisas'
+		cat_name_full = 'Casacos'
 	elif cat == "M":
 		cat_name_full = 'Moletons'
 	elif cat == "B":
@@ -55,11 +88,10 @@ def add_to_cart(req):
 	if not req.session.get('cart'):
 		req.session['cart'] = {}
 		req.session.save()
-	# cart = req.session['cart']
 	cart = req.session.get('cart')
 
 	if variacao_id in cart:
-		actual_quantity_in_cart = cart[variacao_id]['estoque']
+		actual_quantity_in_cart = cart[variacao_id]['quantidade']
 		actual_quantity_in_cart += 1
 
 		if variation_estoque < actual_quantity_in_cart:
@@ -69,7 +101,7 @@ def add_to_cart(req):
 			)
 			actual_quantity_in_cart = variation_estoque
 
-		cart[variacao_id]['estoque'] = actual_quantity_in_cart
+		cart[variacao_id]['quantidade'] = actual_quantity_in_cart
 		cart[variacao_id]['preco_total'] = variacao.preco * actual_quantity_in_cart
 	else:
 		cart[variacao_id] = {
@@ -79,13 +111,13 @@ def add_to_cart(req):
 			'variacao_nome': variacao.nome, 
 			'preco_unitario': variacao.preco,
 			'preco_total': variacao.preco,				# total
-			'estoque': 1,
+			'quantidade': 1,
 			'slug': produto.slug,
-			'image': produto.imagem.name,
+			'imagem': produto.imagem.name,
 		}
 	
 	req.session.save()
-	messages.info(req, f'Produto adicionado ao carrinho, {cart[variacao_id]["estoque"]} total')
+	messages.info(req, f'Produto adicionado ao carrinho, {cart[variacao_id]["quantidade"]} total')
 
 	print(cart)
 	return HttpResponseRedirect(http_referer)
@@ -93,3 +125,36 @@ def add_to_cart(req):
 
 def cart(req):
 	return render(req, 'cart.html')
+
+
+def remove_from_cart(req, varid):
+	http_referer = req.META.get('HTTP_REFERER')
+
+	if not req.session.get('cart'):
+		return redirect(http_referer)
+
+	if not varid:
+		return redirect(http_referer)
+
+	if varid not in req.session['cart']:
+		return redirect(http_referer)
+		print('o alguem tentou mecher nos params pra remover do cart')
+
+	product_in_cart = req.session['cart'][varid]
+	messages.info(req, f'produto {product_in_cart["produto_nome"]} removido com sucesso')
+	# todo: if quantidade > 1 remover 1
+
+	del req.session['cart'][varid]
+	req.session.save()
+	return HttpResponseRedirect(http_referer)
+
+
+def summary(req):
+	perfil = req.user.perfil_set.get(user=req.user)
+
+	context = {
+		'perfil': perfil,
+		'user': req.user
+	}
+
+	return render(req, 'summary.html', context)

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load omfilters %}
 
 {% block content %}
 {% include 'partials/_nav.html' %}
@@ -29,7 +30,7 @@
 			<h3>Preços:</h3>
 			{% for variacao in produto.variacao_set.all %}
 				<div class="one-liner">
-					<p>{{variacao.nome}} - R${{variacao.preco}}</p>
+					<p>{{variacao.nome}} - R${{variacao.preco|format_price}}</p>
 				</div>
 			{% endfor %}
 		</aside>

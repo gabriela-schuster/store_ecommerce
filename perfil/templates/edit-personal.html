@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'partials/_nav.html' %}
+
+<section class="create-user">
+
+	<p class="chique">Se quiser deslogar, clique <a class="a_bold" href="{% url 'logout-user' %}">aqui</a></p>
+	<h2 class="h2-title">Perfil de {{request.user}} - {{request.user.first_name}} {{request.user.last_name}}</h2>
+
+	<form method="POST">
+    {% csrf_token %}
+    {% for field in user_form %}
+
+			{% for error in field.errors %}
+				<div class="alert form-alert error">
+					<p>{{error}}</p>
+				</div>
+			{% endfor %}
+
+    	<label class="bold">{{field.label}}</label>
+    	{{field}}
+
+    {% endfor %}
+
+    <input class="box" type="submit" value="Salvar">
+  </form>
+	
+</section>
+{% endblock %}
