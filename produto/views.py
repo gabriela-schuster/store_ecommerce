@@ -151,10 +151,33 @@ def remove_from_cart(req, varid):
 
 def summary(req):
 	perfil = req.user.perfil_set.get(user=req.user)
+	cart = req.session.get('cart')
 
 	context = {
 		'perfil': perfil,
 		'user': req.user
 	}
+
+	# ------------ checking if the quantity of the product in cart is not > than available
+	# and changing it as necesary
+	cart_variation_ids = [v for v in cart]
+	variations = list(
+		Variacao.objects.select_related('produto').filter(id__in=cart)
+	)
+
+	for variation in variations:
+		v_id = str(variation.id)
+
+		estoque = variation.estoque
+		qtd_cart = cart[v_id]['quantidade']
+
+		if estoque < qtd_cart:
+			cart[v_id]['quantidade'] = estoque
+			cart[v_id]['preco_total'] = estoque * cart[v_id]['preco_unitario']
+			req.session.save()
+
+			messages.error(req, 'Estoque insuficiente para alguns produtos do seu carrinho, adicionando a quantidade máxima disponível, por favor revise a compra')
+
+			return redirect('cart')
 
 	return render(req, 'summary.html', context)
