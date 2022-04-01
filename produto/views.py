@@ -72,6 +72,7 @@ def add_to_cart(req):
 	http_referer = req.META.get('HTTP_REFERER')
 	variacao_id = req.GET.get('vid')
 
+	# verifying things
 	if not variacao_id:
 		messages.error(req, 'Selecione o tipo do produto')
 		return HttpResponseRedirect(http_referer)
@@ -89,6 +90,8 @@ def add_to_cart(req):
 		req.session['cart'] = {}
 		req.session.save()
 	cart = req.session.get('cart')
+
+	# actually adding to cart
 
 	if variacao_id in cart:
 		actual_quantity_in_cart = cart[variacao_id]['quantidade']

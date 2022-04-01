@@ -1,11 +1,40 @@
 {% extends 'base.html' %}
-<!-- {% load omfilters %} -->
+{% load omfilters %}
 
 {% block content %}
 {% include 'partials/_nav.html' %}
 <section>
 
-	<h2>TODO: add payment method</h2>
+  <h2>Escolha o método de pagamento</h2>
+
+  <p>
+		Pedido N. {{pedido.id}} <br/>
+		QTD. Items {{pedido.qtd_total}} <br/>
+		Total R${{pedido.total|format_price}} <br/>
+		Status {{pedido.get_status_display}}
+  </p>
+  
+	<!-- {% for item in pedido.itempedido_set.all %}
+	<div class="cart-product-wrapper">
+		<img src="../../media/{{item.imagem}}" alt="{{item.produto_nome}}">
+
+		<div>
+
+			<div class="one-liner-dont-break">
+				<p>{{item.produto_nome}}</p> - <p>{{item.variacao}}</p>
+			</div>
+			<div class="one-liner-dont-break">
+				<p>R${{item.preco|format_price}}</p> x <p>{{item.quantidade}}</p>
+			</div>
+
+		</div>
+
+	</div>
+	{% endfor %} -->
 	
+	<div class="box gotosomewhere">
+		<p><a href="">PagSeguro</a></p>
+	</div>
+
 </section>
 {% endblock %}

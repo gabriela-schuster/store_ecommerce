@@ -1,9 +1,11 @@
 from sys import stdout
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from .models import ItemPedido, Pedido
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='login-user')
 def save(req):
 	cart = req.session.get('cart')
 
@@ -46,17 +48,28 @@ def save(req):
 		'qtd_total_cart': qtd_total_cart,
 		'total_cart': total_cart,
 	}
-	# return render(req, 'pay.html', context)
-	return redirect('pay')
+	
+	return redirect(reverse('pay', kwargs={'pk': pedido.pk}))
 
 
-def pay(req):
-	return render(req, 'pay.html')
+@login_required(login_url='login-user')
+def pay(req, pk):
+	pedido = Pedido.objects.get(id=pk)
+
+	# redirect to home if user loged is diferent from which the pedido was created
+	if pedido.user != req.session.user:
+		return redirect('home')
+	
+	context = {'pedido': pedido}
+	return render(req, 'pay.html', context)
 
 
-def listar(req):
+def list(req):
 	return render(req, 'list.html')
 
+
+def order_detail(req):
+	...
 
 # --------------------------------- helpers ------------------------------------
 def cart_total_qtd(carrinho):
