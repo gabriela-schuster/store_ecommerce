@@ -331,6 +331,21 @@ header > section > aside > a {
 }
 
 /* 
+ *       ORDERS LIST      * 
+*/
+.orders {
+	margin-top: 3rem;
+	
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+.order h3 {
+	color: var(--text-title);
+	margin-bottom: 2rem;
+}
+
+/* 
 *		FOOTER		*
 */
 footer {
@@ -405,6 +420,7 @@ footer div > * {
 	/* header */
 	header {
 		padding: 1.5rem;
+		grid-template-rows: 1fr 6fr;
 	}
 	nav {
 		padding: 1rem;

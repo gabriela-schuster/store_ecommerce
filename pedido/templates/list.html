@@ -1,11 +1,25 @@
 {% extends 'base.html' %}
-<!-- {% load omfilters %} -->
+{% load omfilters %}
 
 {% block content %}
 {% include 'partials/_nav.html' %}
 <section>
 
-	<h2>TODO: list pedidos</h2>
+  <h2>Seus Pedidos</h2>
+
+  <div class='orders'>
+	{% for pedido in pedidos %}
+	
+	<div class='order box2'>
+	  <h3> {{pedido}}</h3>
+	  <p>Total: R${{pedido.total|format_price}}</p>
+	  <p>Quantidade de Itens: {{pedido.qtd_total}}</p>
+	  <p>Status: {{pedido.get_status_display}}</p>
+	  <a class='a_bold' href="#">Detalhes</a>
+	</div>
+	
+	{% endfor %}
+  </div>
 	
 </section>
 {% endblock %}

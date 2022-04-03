@@ -65,10 +65,12 @@ def pay(req, pk):
 
 
 def list(req):
-	return render(req, 'list.html')
+	pedidos = Pedido.objects.filter(user=req.user).order_by('-id')
+	context = {'pedidos': pedidos}
+	return render(req, 'list.html', context)
 
 
-def order_detail(req):
+def order_detail(req, pk):
 	...
 
 # --------------------------------- helpers ------------------------------------

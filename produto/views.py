@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from .models import Produto, Variacao
 
@@ -152,7 +153,12 @@ def remove_from_cart(req, varid):
 	return HttpResponseRedirect(http_referer)
 
 
+# @login_required(login_url='login_user')
 def summary(req):
+	if not req.user:
+		messages.error(req, 'você precisa criar uma conta para finalizar um pedido')
+		return redirect('create-user')
+	
 	perfil = req.user.perfil_set.get(user=req.user)
 	cart = req.session.get('cart')
 
