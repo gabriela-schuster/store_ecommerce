@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+	'mathfilters',
+
 	'produto.apps.ProdutoConfig',
 	'pedido.apps.PedidoConfig',
 	'perfil.apps.PerfilConfig',

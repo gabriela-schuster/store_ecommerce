@@ -43,7 +43,7 @@ def home(req):
 
 
 def category(req, cat):
-	products = Produto.objects.filter(categoria=cat)
+	products = Produto.objects.filter(categoria=cat).order_by('-id')
 	cat_name_full = None
 
 	if cat == "C":
@@ -114,7 +114,7 @@ def add_to_cart(req):
 			'produto_nome': produto.nome, 
 			'variacao_nome': variacao.nome, 
 			'preco_unitario': variacao.preco,
-			'preco_total': variacao.preco,				# total
+			'preco_total': variacao.preco,				# total da compra
 			'quantidade': 1,
 			'slug': produto.slug,
 			'imagem': produto.imagem.name,

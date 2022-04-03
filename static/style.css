@@ -344,6 +344,12 @@ header > section > aside > a {
 	color: var(--text-title);
 	margin-bottom: 2rem;
 }
+.orders .box > * {
+	color: var(--bg-darker);
+}
+.orders .box p {
+	color: var(--bg-dark);
+}
 
 /* 
 *		FOOTER		*

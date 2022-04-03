@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load omfilters %}
+{% load mathfilters %}
+
+{% block content %}
+{% include 'partials/_nav.html' %}
+<section>
+
+  <h2>{{pedido}} </h2>
+
+  <h3>Itens</h3>
+
+  {% for item in pedido.itempedido_set.all %}
+  <div class="cart-product-wrapper">
+	<img src="../../media/{{item.imagem}}" alt="{{item.produto_nome}}">
+
+	<div>
+	  <div class="one-liner-dont-break">
+		<p>{{item.produto_nome}}</p> - <p>{{item.variacao}}</p>
+	  </div>
+	  <div class="one-liner-dont-break">
+		<p>R${{item.preco|format_price}}</p> x <p>{{item.quantidade}}</p> = 
+		<p> R${{ item.preco|mul:item.quantidade}}</p>
+	  </div>
+
+	</div>
+
+  </div>
+  {% endfor %}
+
+  <h3>total: R$ {{pedido.total}}</h3>
+	
+</section>
+{% endblock %}

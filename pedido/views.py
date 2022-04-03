@@ -57,7 +57,7 @@ def pay(req, pk):
 	pedido = Pedido.objects.get(id=pk)
 
 	# redirect to home if user loged is diferent from which the pedido was created
-	if pedido.user != req.session.user:
+	if pedido.user != req.user:
 		return redirect('home')
 	
 	context = {'pedido': pedido}
@@ -71,7 +71,10 @@ def list(req):
 
 
 def order_detail(req, pk):
-	...
+	context = {
+		'pedido': Pedido.objects.get(id=pk)
+	}
+	return render(req, 'order-detail.html', context)
 
 # --------------------------------- helpers ------------------------------------
 def cart_total_qtd(carrinho):
